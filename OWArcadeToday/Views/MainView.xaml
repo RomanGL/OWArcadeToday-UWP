@@ -1,0 +1,203 @@
+﻿<Page x:Class="OWArcadeToday.Views.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:OWArcadeToday.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:model="using:OWArcadeToday.Models"
+      xmlns:controls="using:OWArcadeToday.Controls"
+      xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      mc:Ignorable="d">
+
+    <Viewbox>
+        <Grid Margin="120,80,120,60"
+              Width="1500"
+              Height="830">
+            <Grid x:Name="contentBlock"
+                  Visibility="Collapsed">
+                <Grid.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                 FromVerticalOffset="0"
+                                                 FromHorizontalOffset="150"/>
+                    </TransitionCollection>
+                </Grid.ChildrenTransitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <toolkit:DropShadowPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Margin="0,20,0,0"
+                                         ShadowOpacity="0.5"
+                                         Grid.Row="1"
+                                         BlurRadius="64"
+                                         OffsetY="10"
+                                         HorizontalContentAlignment="Stretch">
+                    <Grid>
+                        <Grid.ChildrenTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                         FromVerticalOffset="0"
+                                                         FromHorizontalOffset="150" />
+                            </TransitionCollection>
+                        </Grid.ChildrenTransitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:Tile TileData="{x:Bind VM.Data.TileLarge, Mode=OneWay}"
+                                       Style="{StaticResource LargeTileStyle}"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.RowSpan="2" />
+
+                        <controls:Tile TileData="{x:Bind VM.Data.TileWeekly1, Mode=OneWay}"
+                                       Grid.Row="0"
+                                       Grid.Column="1" />
+
+                        <controls:Tile TileData="{x:Bind VM.Data.TileDaily, Mode=OneWay}"
+                                       Grid.Row="0"
+                                       Grid.Column="2" />
+
+                        <controls:Tile TileData="{x:Bind VM.Data.TileWeekly2, Mode=OneWay}"
+                                       Grid.Row="1"
+                                       Grid.Column="1" />
+
+                        <controls:Tile TileData="{x:Bind VM.Data.TilePermanent, Mode=OneWay}"
+                                       Grid.Row="1"
+                                       Grid.Column="2" />
+                    </Grid>
+                </toolkit:DropShadowPanel>
+
+                <Grid Margin="0,0,10,0"
+                      Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle Fill="{ThemeResource OverwatchIconBrush}"
+                               Height="96"
+                               Width="96" />
+
+                    <TextBlock Text="Today's Arcade"
+                               Grid.Column="1"
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource AppHeaderTextBlockStyle}"
+                               Margin="12,0,0,0"
+                               HorizontalAlignment="Left" />
+
+                    <TextBlock Grid.Column="2"
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource AppSubHeaderTextBlockStyle}"
+                               HorizontalAlignment="Right"
+                               Width="560">
+                    <Run Text="Day resets in" />
+                    <Run Text="{x:Bind VM.TimeLeft, Mode=OneWay}" />
+                    </TextBlock>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0"
+                            Grid.Row="2">
+                    <Button Content="Settings"
+                            Style="{StaticResource ButtonRevealStyle}"
+                            Padding="50,12"
+                            Margin="10,0"
+                            FontSize="32"
+                            FontFamily="/Assets/bignoodletoo.ttf#BigNoodleTooOblique"
+                            Click="SettingsButton_Click" />
+                </StackPanel>
+            </Grid>
+
+            <Border x:Name="loadingBlock"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Visibility="Collapsed">
+                <Border.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                 FromVerticalOffset="0"
+                                                 FromHorizontalOffset="150"/>
+                    </TransitionCollection>
+                </Border.Transitions>
+
+                <TextBlock Text="Loading..."
+                           Style="{StaticResource AppHeaderTextBlockStyle}"/>
+            </Border>
+
+            <StackPanel x:Name="errorBlock"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Visibility="Collapsed">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                 FromVerticalOffset="0"
+                                                 FromHorizontalOffset="150"/>
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock Text="An error occured"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource AppHeaderTextBlockStyle}" />
+                <Button Content="Try again"
+                        Style="{StaticResource ButtonRevealStyle}"
+                        Padding="50,12"
+                        Margin="10,40,10,0"
+                        FontSize="32"
+                        FontFamily="/Assets/bignoodletoo.ttf#BigNoodleTooOblique"
+                        HorizontalAlignment="Center"
+                        Click="RetryButton_Click" />
+            </StackPanel>
+
+            <StackPanel x:Name="noDataBlock"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Visibility="Collapsed">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                 FromVerticalOffset="0"
+                                                 FromHorizontalOffset="150" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock TextWrapping="WrapWholeWords"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource AppHeaderTextBlockStyle}"
+                           TextAlignment="Center"
+                           TextLineBounds="TrimToBaseline">
+                    <Run Text="So far, no information available"/>
+                    <LineBreak/>
+                    <Run Text="Try again later"/>
+                </TextBlock>
+                <Button Content="Try again"
+                        Style="{StaticResource ButtonRevealStyle}"
+                        Padding="50,12"
+                        Margin="10,40,10,0"
+                        FontSize="32"
+                        FontFamily="/Assets/bignoodletoo.ttf#BigNoodleTooOblique"
+                        HorizontalAlignment="Center"
+                        Click="RetryButton_Click" />
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Page>
