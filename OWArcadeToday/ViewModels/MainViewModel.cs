@@ -56,7 +56,9 @@ namespace OWArcadeToday.ViewModels
                 return;
 
             Data = await _service.GetTodayArcadeAsync();
+
             _settingsService.Set("UpdatedAt", Data.UpdatedAt);
+            _settingsService.Set("LastData", Data);
         }
 
         public void StartTimer()

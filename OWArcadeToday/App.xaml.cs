@@ -78,7 +78,7 @@ namespace OWArcadeToday
             BackgroundTaskHelper.Register(
                 taskName,
                 taskEntryPoint,
-                new TimeTrigger(15, false),
+                new TimeTrigger(120, false),
                 conditions: new SystemCondition(SystemConditionType.InternetAvailable));
         }
     }

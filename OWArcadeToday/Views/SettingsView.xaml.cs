@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.ApplicationModel.Background;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using OWArcadeToday.Services;
 

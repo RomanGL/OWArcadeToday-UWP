@@ -13,22 +13,49 @@ namespace BackgroundTasks
         private const string MODE_IMAGE_URL_MASK = "https://overwatcharcade.today/img/modes/{0}.jpg";
         private const string MODE_LARGE_IMG_URL_MASK = "https://overwatcharcade.today/img/modes_large/{0}.jpg";
 
+        private const string newDailyArcade = "New daily arcade";
+        private const string newWeeklyArcade = "New weekly arcade";
+        private const string newPermanentArcade = "New permanent arcade";
+
         private readonly DataService _dataService = new DataService();
+        private readonly SettingsService _settingsService = new SettingsService();
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
-            var settingsService = new SettingsService();
 
             try
             {
-                if (settingsService.GetNoCache("NotificationsEnabled", true))
+                if (_settingsService.GetNoCache("NotificationsEnabled", true))
                 {
                     var todayArcades = await _dataService.GetTodayArcadeAsync();
-                    ShowToasts(todayArcades);
-                    if (todayArcades.UpdatedAt > settingsService.GetNoCache("UpdatedAt", DateTime.MinValue))
+                    
+                    if (todayArcades.UpdatedAt > _settingsService.GetNoCache("UpdatedAt", DateTime.MinValue))
                     {
-
+                        var lastData = _settingsService.Get<ArcadeDailyData>("LastData");
+                        _settingsService.Set("LastData", todayArcades);
+                        
+                        if (lastData == null)
+                        {
+                            ShowTileToast(todayArcades.TileLarge, newDailyArcade);
+                            ShowTileToast(todayArcades.TileDaily, newDailyArcade);
+                            ShowTileToast(todayArcades.TileWeekly1, newWeeklyArcade);
+                            ShowTileToast(todayArcades.TileWeekly2, newWeeklyArcade);
+                            ShowTileToast(todayArcades.TilePermanent, newPermanentArcade);
+                        }
+                        else
+                        {
+                            if (lastData.TileLarge.Id != todayArcades.TileLarge.Id)
+                                ShowTileToast(todayArcades.TileLarge, newDailyArcade);
+                            if (lastData.TileDaily.Id != todayArcades.TileDaily.Id)
+                                ShowTileToast(todayArcades.TileDaily, newDailyArcade);
+                            if (lastData.TileWeekly1.Id != todayArcades.TileWeekly1.Id)
+                                ShowTileToast(todayArcades.TileWeekly1, newWeeklyArcade);
+                            if (lastData.TileWeekly2.Id != todayArcades.TileWeekly2.Id)
+                                ShowTileToast(todayArcades.TileWeekly2, newWeeklyArcade);
+                            if (lastData.TilePermanent.Id != todayArcades.TilePermanent.Id)
+                                ShowTileToast(todayArcades.TilePermanent, newPermanentArcade);
+                        }
                     }
                 }
             }
@@ -42,12 +69,7 @@ namespace BackgroundTasks
             }
         }
 
-        private void ShowToasts(ArcadeDailyData data)
-        {
-            ShowDailyToast(data.TileDaily);
-        }
-
-        private void ShowDailyToast(ArcadeTileData data)
+        private void ShowTileToast(ArcadeTileData data, string title)
         {
             var toastContent = new ToastContent()
             {
@@ -59,12 +81,12 @@ namespace BackgroundTasks
                         {
                             new AdaptiveText()
                             {
-                                Text = "New daily arcade",
+                                Text = title,
                                 HintMaxLines = 1
                             },
                             new AdaptiveText()
                             {
-                                Text = "Total Mayhem"
+                                Text = data.Name
                             },
                             new AdaptiveGroup()
                             {
@@ -72,6 +94,7 @@ namespace BackgroundTasks
                                 {
                                     new AdaptiveSubgroup()
                                     {
+                                        HintWeight = 1,
                                         Children =
                                         {
                                             new AdaptiveText()
@@ -79,43 +102,34 @@ namespace BackgroundTasks
                                                 Text = "Players",
                                                 HintStyle = AdaptiveTextStyle.Body
                                             },
-                                            new AdaptiveText()
-                                            {
-                                                Text = "6v6",
-                                                HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                            }
                                         }
                                     },
                                     new AdaptiveSubgroup()
                                     {
+                                        HintWeight = 1,
                                         Children =
                                         {
                                             new AdaptiveText()
                                             {
-                                                Text = "Power up and embrace the chaos.",
+                                                Text = data.Players,
                                                 HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                HintWrap = true,
                                                 HintAlign = AdaptiveTextAlign.Right
                                             }
-                                        },
-                                        HintTextStacking = AdaptiveSubgroupTextStacking.Bottom
+                                        }
                                     }
                                 }
                             }
                         },
                         HeroImage = new ToastGenericHeroImage()
                         {
-                            Source = "https://overwatcharcade.today/img/modes/totalmayhem.jpg"
+                            Source = TileToImageUrl(data)
                         }
                     }
                 }
             };
 
-            // Create the toast notification
-            var toastNotif = new ToastNotification(toastContent.GetXml());
-
-            // And send the notification
-            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+            var notification = new ToastNotification(toastContent.GetXml());
+            ToastNotificationManager.CreateToastNotifier().Show(notification);
         }
 
         private static string TileToImageUrl(ArcadeTileData tile, bool isLargeTile = false)
