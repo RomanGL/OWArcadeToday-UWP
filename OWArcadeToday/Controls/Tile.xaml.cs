@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -25,6 +26,18 @@ namespace OWArcadeToday.Controls
 
         public static readonly DependencyProperty IsLargeTileProperty = DependencyProperty.Register(
             nameof(IsLargeTile), typeof(bool), typeof(Tile), new PropertyMetadata(default(bool), OnIsLargeTileChanged));
+
+        public static readonly DependencyProperty IsBadgeVisibleProperty = DependencyProperty.Register(
+            nameof(IsBadgeVisible), typeof(bool), typeof(Tile), new PropertyMetadata(default(bool), OnIsBadgeVisibleChanged));
+        
+        public static readonly DependencyProperty BadgeTextProperty = DependencyProperty.Register(
+            nameof(BadgeText), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty BadgeBackgroundProperty = DependencyProperty.Register(
+            nameof(BadgeBackground), typeof(Brush), typeof(Tile), new PropertyMetadata(new SolidColorBrush(Colors.ForestGreen)));
+
+        public static readonly DependencyProperty BadgeBackground2Property = DependencyProperty.Register(
+            nameof(BadgeBackground2), typeof(Brush), typeof(Tile), new PropertyMetadata(new SolidColorBrush(Colors.DarkGreen)));
         
         public ArcadeTileData TileData
         {
@@ -44,6 +57,30 @@ namespace OWArcadeToday.Controls
             set => SetValue(IsLargeTileProperty, value);
         }
 
+        public bool IsBadgeVisible
+        {
+            get => (bool)GetValue(IsBadgeVisibleProperty);
+            set => SetValue(IsBadgeVisibleProperty, value);
+        }
+
+        public string BadgeText
+        {
+            get => (string)GetValue(BadgeTextProperty);
+            set => SetValue(BadgeTextProperty, value);
+        }
+
+        public Brush BadgeBackground
+        {
+            get => (Brush)GetValue(BadgeBackgroundProperty);
+            set => SetValue(BadgeBackgroundProperty, value);
+        }
+
+        public Brush BadgeBackground2
+        {
+            get => (Brush)GetValue(BadgeBackground2Property);
+            set => SetValue(BadgeBackground2Property, value);
+        }
+
         private static void OnTileDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (Tile)d;
@@ -54,6 +91,12 @@ namespace OWArcadeToday.Controls
         {
             var control = (Tile)d;
             control.UpdateImage();
+        }
+
+        private static void OnIsBadgeVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Tile)d;
+            control.UpdateBadge();
         }
 
         private void UpdateImage()
@@ -68,6 +111,11 @@ namespace OWArcadeToday.Controls
 
                 TileImage = new BitmapImage(new Uri(url));
             }
+        }
+
+        private void UpdateBadge()
+        {
+            badgeBlock.Visibility = IsBadgeVisible ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

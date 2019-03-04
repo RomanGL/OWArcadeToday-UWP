@@ -148,6 +148,7 @@
     <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\BadgeLogo.scale-400.png" />
     <Content Include="Assets\bignoodletoo.ttf" />
+    <Content Include="Assets\bignoodletitling.ttf" />
     <None Include="OWArcadeToday_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

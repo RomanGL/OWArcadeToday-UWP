@@ -42,5 +42,27 @@
                        VerticalAlignment="Center"
                        Style="{StaticResource CardHeaderTextBlockStyle}"/>
         </Grid>
+
+        <Grid HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Margin="-15,20,0,0"
+              x:Name="badgeBlock"
+              Visibility="Collapsed">
+            <Path Data="m0.420822,0.358322l299.5,298.5625l0,-299l-299.5,0.4375z"
+                  Fill="{x:Bind BadgeBackground2, Mode=OneWay}"
+                  Width="15"
+                  Height="15"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Bottom"
+                  Margin="0,0,0,-15" />
+            <Border Background="{x:Bind BadgeBackground, Mode=OneWay}"
+                    Padding="15,10"
+                    VerticalAlignment="Top">
+                <TextBlock Text="{x:Bind BadgeText, Mode=OneWay}"
+                           Foreground="White"
+                           FontFamily="/Assets/bignoodletitling.ttf#BigNoodleTitlingCyr"
+                           FontSize="32" />
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

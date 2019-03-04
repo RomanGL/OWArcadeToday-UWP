@@ -60,23 +60,40 @@
                                        Style="{StaticResource LargeTileStyle}"
                                        Grid.Row="0"
                                        Grid.Column="0"
-                                       Grid.RowSpan="2" />
+                                       Grid.RowSpan="2" 
+                                       IsBadgeVisible="True"
+                                       BadgeText="Changes weekly"
+                                       BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
+                                       BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}"/>
 
                         <controls:Tile TileData="{x:Bind VM.Data.TileWeekly1, Mode=OneWay}"
                                        Grid.Row="0"
-                                       Grid.Column="1" />
+                                       Grid.Column="1"
+                                       IsBadgeVisible="True"
+                                       BadgeText="Changes weekly"
+                                       BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
+                                       BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}" />
 
                         <controls:Tile TileData="{x:Bind VM.Data.TileDaily, Mode=OneWay}"
                                        Grid.Row="0"
-                                       Grid.Column="2" />
+                                       Grid.Column="2"
+                                       IsBadgeVisible="True"
+                                       BadgeText="Changes daily"
+                                       BadgeBackground="{StaticResource OrangeBadgeBackgroundBrush}"
+                                       BadgeBackground2="{StaticResource OrangeBadgeBackground2Brush}" />
 
                         <controls:Tile TileData="{x:Bind VM.Data.TileWeekly2, Mode=OneWay}"
                                        Grid.Row="1"
-                                       Grid.Column="1" />
+                                       Grid.Column="1"
+                                       IsBadgeVisible="True"
+                                       BadgeText="Changes weekly"
+                                       BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
+                                       BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}" />
 
                         <controls:Tile TileData="{x:Bind VM.Data.TilePermanent, Mode=OneWay}"
                                        Grid.Row="1"
-                                       Grid.Column="2" />
+                                       Grid.Column="2" 
+                                       IsBadgeVisible="False"/>
                     </Grid>
                 </toolkit:DropShadowPanel>
 

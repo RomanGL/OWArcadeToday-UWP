@@ -55,7 +55,7 @@
                 Value="10"/>
     </Style>
 
-    <Style x:Name="LargeTileStyle" 
+    <Style x:Key="LargeTileStyle" 
            TargetType="controls:Tile">
         <Setter Property="Width"
                 Value="650" />
@@ -68,6 +68,21 @@
         <Setter Property="IsLargeTile"
                 Value="True"/>
     </Style>
+
+    <SolidColorBrush x:Key="GreenBadgeBackgroundBrush"
+                     Color="#17B113"/>
+    <SolidColorBrush x:Key="GreenBadgeBackground2Brush"
+                     Color="#0C590A"/>
+
+    <SolidColorBrush x:Key="OrangeBadgeBackgroundBrush"
+                     Color="#F89E1B" />
+    <SolidColorBrush x:Key="OrangeBadgeBackground2Brush"
+                     Color="#7C4F0E" />
+
+    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush"
+                     Color="#F89E1B"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush"
+                     Color="#F8BF1B"/>
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
