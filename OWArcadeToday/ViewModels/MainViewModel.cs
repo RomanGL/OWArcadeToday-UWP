@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using OWArcadeToday.Models;
@@ -13,6 +14,7 @@ namespace OWArcadeToday.ViewModels
         private readonly DispatcherTimer _timer;
 
         private ArcadeDailyData _data;
+        private bool _isDataObsoleted;
         private string _timeLeft = "00:00:00";
 
         public MainViewModel()
@@ -37,6 +39,19 @@ namespace OWArcadeToday.ViewModels
             }
         }
 
+        public bool IsDataObsoleted
+        {
+            get => _isDataObsoleted;
+            set
+            {
+                if (value != _isDataObsoleted)
+                {
+                    _isDataObsoleted = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string TimeLeft
         {
             get => _timeLeft;
@@ -55,7 +70,19 @@ namespace OWArcadeToday.ViewModels
             if (Data != null)
                 return;
 
-            Data = await _service.GetTodayArcadeAsync();
+            try
+            {
+                Data = await _service.GetTodayArcadeAsync();
+            }
+            catch (NoDataException)
+            {
+                var history = await _service.GetWeekHistoryAsync();
+                if (history == null || history.Count == 0)
+                    throw new NoDataException();
+
+                IsDataObsoleted = true;
+                Data = history.First();
+            }
 
             _settingsService.Set("UpdatedAt", Data.UpdatedAt);
             _settingsService.Set("LastData", Data);

@@ -7,12 +7,17 @@
       xmlns:model="using:OWArcadeToday.Models"
       xmlns:controls="using:OWArcadeToday.Controls"
       xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:converters="using:OWArcadeToday.Converters"
       mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:DateTimeToRelativeStringConverter x:Key="DateTimeToRelativeStringConverter"/>
+    </Page.Resources>
 
     <Viewbox>
         <Grid Margin="120,80,120,60"
               Width="1500"
-              Height="830">
+              Height="Auto">
             <Grid x:Name="contentBlock"
                   Visibility="Collapsed">
                 <Grid.ChildrenTransitions>
@@ -126,18 +131,45 @@
                     </TextBlock>
                 </Grid>
 
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            Margin="0,10,0,0"
-                            Grid.Row="2">
+                <Grid Margin="0,10,0,0"
+                      Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource CardSubHeaderTextBlockStyle}"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                   Visibility="{x:Bind VM.IsDataObsoleted, Mode=OneWay}"
+                                   VerticalAlignment="Center"
+                                   TextWrapping="WrapWholeWords">
+                            <Run Text="Warning!"
+                                 Foreground="{StaticResource OrangeBadgeBackgroundBrush}" />
+                            <Run Text="Today's arcade hasn't been updated yet" />
+                        </TextBlock>
+
+                        <TextBlock Style="{StaticResource CardSubHeaderTextBlockStyle}"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                   VerticalAlignment="Center"
+                                   TextWrapping="WrapWholeWords">
+                            <Run Text="Last updated by" />
+                            <Run Text="calliejacob#2855"
+                                 Foreground="{StaticResource OrangeBadgeBackgroundBrush}" />
+                            <Run Text="{x:Bind VM.Data.UpdatedAt, Mode=OneWay, Converter={StaticResource DateTimeToRelativeStringConverter}}" />
+                        </TextBlock>
+                    </StackPanel>
+
                     <Button Content="Settings"
                             Style="{StaticResource ButtonRevealStyle}"
+                            VerticalAlignment="Center"
+                            Grid.Column="1"
                             Padding="50,12"
                             Margin="10,0"
                             FontSize="32"
                             FontFamily="/Assets/bignoodletoo.ttf#BigNoodleTooOblique"
                             Click="SettingsButton_Click" />
-                </StackPanel>
+                </Grid>
             </Grid>
 
             <Border x:Name="loadingBlock"
@@ -202,9 +234,18 @@
                            Style="{StaticResource AppHeaderTextBlockStyle}"
                            TextAlignment="Center"
                            TextLineBounds="TrimToBaseline">
-                    <Run Text="So far, no information available"/>
+                    <Run Text="So far, no data available"/>
                     <LineBreak/>
                     <Run Text="Try again later"/>
+                </TextBlock>
+                <TextBlock Style="{StaticResource CardSubHeaderTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                           TextAlignment="Center"
+                           Margin="0,15,0,0">
+                    <Run Text="Or visit" />
+                    <Hyperlink NavigateUri="https://overwatcharcade.today/"
+                               Foreground="{StaticResource OrangeBadgeBackgroundBrush}"
+                               TextDecorations="None">overwatcharcade.today</Hyperlink>
                 </TextBlock>
                 <Button Content="Try again"
                         Style="{StaticResource ButtonRevealStyle}"

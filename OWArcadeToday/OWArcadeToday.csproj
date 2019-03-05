@@ -128,6 +128,7 @@
     <Compile Include="Controls\Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateTimeToRelativeStringConverter.cs" />
     <Compile Include="Converters\TextToUpperConverter.cs" />
     <Compile Include="Helpers\WindowHelper.cs" />
     <Compile Include="Models\ArcadeDailyData.cs" />
@@ -214,6 +215,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Humanizer.Core">
+      <Version>2.5.16</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.9</Version>
     </PackageReference>

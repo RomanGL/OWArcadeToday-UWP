@@ -12,7 +12,7 @@
         <Viewbox>
             <Grid Margin="120,80,120,60"
                   Width="1500"
-                  Height="830">
+                  Height="856">
                 <Grid.ChildrenTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition IsStaggeringEnabled="True"

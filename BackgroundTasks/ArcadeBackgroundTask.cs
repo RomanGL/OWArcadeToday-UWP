@@ -37,7 +37,7 @@ namespace BackgroundTasks
                         
                         if (lastData == null)
                         {
-                            ShowTileToast(todayArcades.TileLarge, newDailyArcade);
+                            ShowTileToast(todayArcades.TileLarge, newWeeklyArcade);
                             ShowTileToast(todayArcades.TileDaily, newDailyArcade);
                             ShowTileToast(todayArcades.TileWeekly1, newWeeklyArcade);
                             ShowTileToast(todayArcades.TileWeekly2, newWeeklyArcade);

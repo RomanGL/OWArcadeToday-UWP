@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using Newtonsoft.Json;
@@ -15,6 +16,13 @@ namespace OWArcadeToday.Services
         {
             string json = await GetResponseAsync(API_TODAY);
             var data = JsonConvert.DeserializeObject<ArcadeDailyData>(json);
+            return data;
+        }
+
+        public async Task<List<ArcadeDailyData>> GetWeekHistoryAsync()
+        {
+            string json = await GetResponseAsync(API_WEEK);
+            var data = JsonConvert.DeserializeObject<List<ArcadeDailyData>>(json);
             return data;
         }
 

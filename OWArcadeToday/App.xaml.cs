@@ -21,6 +21,16 @@ namespace OWArcadeToday
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            InitializeApplication(e);
+        }
+
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            InitializeApplication(e);
+        }
+
+        private void InitializeApplication(IActivatedEventArgs e)
+        {
             var rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
@@ -31,13 +41,13 @@ namespace OWArcadeToday
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (e is LaunchActivatedEventArgs launchArgs && launchArgs.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainView), e.Arguments);
+                    rootFrame.Navigate(typeof(MainView));
                 }
-                
+
                 Window.Current.Activate();
             }
 
