@@ -35,9 +35,10 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Rectangle Fill="{ThemeResource OverwatchIconBrush}"
-                               Height="96"
-                               Width="96" />
+                    <Image Source="{ThemeResource OverwatchLogo}"
+                           Stretch="Uniform"
+                           Width="96"
+                           Height="96" />
 
                     <TextBlock Text="Settings"
                                Grid.Column="1"
@@ -94,7 +95,7 @@
                                Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
                                TextWrapping="WrapWholeWords">
                         <Run Text="Version" />
-                        <Run Text="1.0.0.0"
+                        <Run Text="1.0.1.0"
                              Foreground="{StaticResource OrangeBadgeBackgroundBrush}" />
                     </TextBlock>
 

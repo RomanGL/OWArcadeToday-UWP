@@ -41,15 +41,12 @@ namespace OWArcadeToday
                 Window.Current.Content = rootFrame;
             }
 
-            if (e is LaunchActivatedEventArgs launchArgs && launchArgs.PrelaunchActivated == false)
+            if (rootFrame.Content == null)
             {
-                if (rootFrame.Content == null)
-                {
-                    rootFrame.Navigate(typeof(MainView));
-                }
-
-                Window.Current.Activate();
+                rootFrame.Navigate(typeof(MainView));
             }
+
+            Window.Current.Activate();
 
             WindowHelper.HideTitleBar();
             WindowHelper.SetTitleBarColors();

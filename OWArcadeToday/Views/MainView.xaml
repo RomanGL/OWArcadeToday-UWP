@@ -110,9 +110,10 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Rectangle Fill="{ThemeResource OverwatchIconBrush}"
-                               Height="96"
-                               Width="96" />
+                    <Image Source="{ThemeResource OverwatchLogo}"
+                           Stretch="Uniform"
+                           Width="96"
+                           Height="96"/>
 
                     <TextBlock Text="Today's Arcade"
                                Grid.Column="1"

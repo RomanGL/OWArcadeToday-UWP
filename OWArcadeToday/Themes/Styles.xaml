@@ -86,15 +86,13 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-            <ImageBrush x:Key="OverwatchIconBrush" 
-                        ImageSource="/Assets/ow-icon-light.png"
-                        Stretch="Uniform"/>
+            <BitmapImage x:Key="OverwatchLogo"
+                         UriSource="/Assets/ow-icon-light.png"/>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Dark">
-            <ImageBrush x:Key="OverwatchIconBrush"
-                        ImageSource="/Assets/ow-icon-dark.png"
-                        Stretch="Uniform" />
+            <BitmapImage x:Key="OverwatchLogo"
+                         UriSource="/Assets/ow-icon-dark.png"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
