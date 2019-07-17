@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="63005RomanGladkikh.OWArcadeToday" Publisher="CN=7B5C2571-5F76-4244-A81C-8A0EA0AC90C0" Version="1.0.1.0" />
+  <Identity Name="63005RomanGladkikh.OWArcadeToday" Publisher="CN=7B5C2571-5F76-4244-A81C-8A0EA0AC90C0" Version="1.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="aca743fe-16ae-40c3-949c-3d595fbe4411" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>OW Arcade Today</DisplayName>

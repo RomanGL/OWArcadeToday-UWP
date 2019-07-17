@@ -1,8 +1,7 @@
-﻿using System;
-using Windows.ApplicationModel.Background;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using OWArcadeToday.Services;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace OWArcadeToday.Views
 {
@@ -20,6 +19,8 @@ namespace OWArcadeToday.Views
         private void SettingsView_Loaded(object sender, RoutedEventArgs e)
         {
             notificationsToggle.IsOn = _settingsService.Get(NOTIFICATIONS_PARAM_NAME, true);
+            var ver = SystemInformation.ApplicationVersion;
+            VersionText.Text = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
         }
 
         private void ToggleSwitch_OnToggled(object sender, RoutedEventArgs e)

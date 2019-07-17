@@ -95,7 +95,8 @@
                                Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
                                TextWrapping="WrapWholeWords">
                         <Run Text="Version" />
-                        <Run Text="1.0.1.0"
+                        <Run Text="0.0.0.0"
+                             x:Name="VersionText"
                              Foreground="{StaticResource OrangeBadgeBackgroundBrush}" />
                     </TextBlock>
 
