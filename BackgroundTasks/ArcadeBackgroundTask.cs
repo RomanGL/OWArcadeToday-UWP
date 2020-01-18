@@ -2,59 +2,84 @@
 using System.Diagnostics;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
-using BackgroundTasks.Models;
-using BackgroundTasks.Services;
 using Microsoft.Toolkit.Uwp.Notifications;
+using OWArcadeToday.Core.Models;
+using OWArcadeToday.Core.Services;
+using OWArcadeToday.Helpers;
+using OWArcadeToday.Services;
 
 namespace BackgroundTasks
 {
+    /// <summary>
+    /// Represents a background task for notification.
+    /// </summary>
     public sealed class ArcadeBackgroundTask : IBackgroundTask
     {
+        #region Fields
+
         private const string MODE_IMAGE_URL_MASK = "https://overwatcharcade.today/img/modes/{0}.jpg";
         private const string MODE_LARGE_IMG_URL_MASK = "https://overwatcharcade.today/img/modes_large/{0}.jpg";
 
-        private const string newDailyArcade = "New daily arcade";
-        private const string newWeeklyArcade = "New weekly arcade";
-        private const string newPermanentArcade = "New permanent arcade";
+        private const string NEW_DAILY_ARCADE = "New daily arcade";
+        private const string NEW_WEEKLY_ARCADE = "New weekly arcade";
+        private const string NEW_PERMANENT_ARCADE = "New permanent arcade";
 
-        private readonly DataService _dataService = new DataService();
-        private readonly SettingsService _settingsService = new SettingsService();
+        private readonly IDataService dataService;
+        private readonly ISettingsService settingsService;
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArcadeBackgroundTask"/> class.
+        /// </summary>
+        public ArcadeBackgroundTask()
+        {
+            dataService = new DataService(HttpHelper.GetUserAgent());
+            settingsService = new SettingsService();
+        }
+
+        #endregion
+
+        #region Implementation of IBackgroundTask
+
+        /// <inheritdoc />
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
+            var deferral = taskInstance.GetDeferral();
 
             try
             {
-                if (_settingsService.GetNoCache("NotificationsEnabled", true))
+                if (settingsService.GetNoCache("NotificationsEnabled", true))
                 {
-                    var todayArcades = await _dataService.GetTodayArcadeAsync();
+                    var todayArcades = await dataService.GetTodayArcadeAsync();
                     
-                    if (todayArcades.UpdatedAt > _settingsService.GetNoCache("UpdatedAt", DateTime.MinValue))
+                    if (todayArcades.CreatedAt > settingsService.GetNoCache("CreatedAt", DateTime.MinValue))
                     {
-                        var lastData = _settingsService.Get<ArcadeDailyData>("LastData");
-                        _settingsService.Set("LastData", todayArcades);
+                        var lastData = settingsService.Get<ArcadeDailyData>("LastData");
+                        settingsService.Set("LastData", todayArcades);
                         
                         if (lastData == null)
                         {
-                            ShowTileToast(todayArcades.TileLarge, newWeeklyArcade);
-                            ShowTileToast(todayArcades.TileDaily, newDailyArcade);
-                            ShowTileToast(todayArcades.TileWeekly1, newWeeklyArcade);
-                            ShowTileToast(todayArcades.TileWeekly2, newWeeklyArcade);
-                            ShowTileToast(todayArcades.TilePermanent, newPermanentArcade);
+                            //ShowTileToast(todayArcades.TileLarge, NEW_WEEKLY_ARCADE);
+                            //ShowTileToast(todayArcades.TileDaily, NEW_DAILY_ARCADE);
+                            //ShowTileToast(todayArcades.TileWeekly1, NEW_WEEKLY_ARCADE);
+                            //ShowTileToast(todayArcades.TileWeekly2, NEW_WEEKLY_ARCADE);
+                            //ShowTileToast(todayArcades.TilePermanent, NEW_PERMANENT_ARCADE);
                         }
                         else
                         {
-                            if (lastData.TileLarge.Id != todayArcades.TileLarge.Id)
-                                ShowTileToast(todayArcades.TileLarge, newDailyArcade);
-                            if (lastData.TileDaily.Id != todayArcades.TileDaily.Id)
-                                ShowTileToast(todayArcades.TileDaily, newDailyArcade);
-                            if (lastData.TileWeekly1.Id != todayArcades.TileWeekly1.Id)
-                                ShowTileToast(todayArcades.TileWeekly1, newWeeklyArcade);
-                            if (lastData.TileWeekly2.Id != todayArcades.TileWeekly2.Id)
-                                ShowTileToast(todayArcades.TileWeekly2, newWeeklyArcade);
-                            if (lastData.TilePermanent.Id != todayArcades.TilePermanent.Id)
-                                ShowTileToast(todayArcades.TilePermanent, newPermanentArcade);
+                            //if (lastData.TileLarge.Id != todayArcades.TileLarge.Id)
+                            //    ShowTileToast(todayArcades.TileLarge, NEW_DAILY_ARCADE);
+                            //if (lastData.TileDaily.Id != todayArcades.TileDaily.Id)
+                            //    ShowTileToast(todayArcades.TileDaily, NEW_DAILY_ARCADE);
+                            //if (lastData.TileWeekly1.Id != todayArcades.TileWeekly1.Id)
+                            //    ShowTileToast(todayArcades.TileWeekly1, NEW_WEEKLY_ARCADE);
+                            //if (lastData.TileWeekly2.Id != todayArcades.TileWeekly2.Id)
+                            //    ShowTileToast(todayArcades.TileWeekly2, NEW_WEEKLY_ARCADE);
+                            //if (lastData.TilePermanent.Id != todayArcades.TilePermanent.Id)
+                            //    ShowTileToast(todayArcades.TilePermanent, NEW_PERMANENT_ARCADE);
                         }
                     }
                 }
@@ -68,6 +93,10 @@ namespace BackgroundTasks
                 deferral.Complete();
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void ShowTileToast(ArcadeTileData data, string title)
         {
@@ -122,7 +151,7 @@ namespace BackgroundTasks
                         },
                         HeroImage = new ToastGenericHeroImage()
                         {
-                            Source = TileToImageUrl(data)
+                            Source = GetGameModeImageUrl(data.Code)
                         }
                     }
                 }
@@ -132,9 +161,18 @@ namespace BackgroundTasks
             ToastNotificationManager.CreateToastNotifier().Show(notification);
         }
 
-        private static string TileToImageUrl(ArcadeTileData tile, bool isLargeTile = false)
+
+        /// <summary>
+        /// Gets the url of the game mode image.
+        /// </summary>
+        /// <param name="gameModeCode">The game mode code.</param>
+        /// <param name="isLargeTile">The value indicating whether a tile is large.</param>
+        /// <returns>Returns the url to the game mode image.</returns>
+        private static string GetGameModeImageUrl(string gameModeCode, bool isLargeTile = false)
         {
-            return String.Format(isLargeTile ? MODE_LARGE_IMG_URL_MASK : MODE_IMAGE_URL_MASK, tile.Code);
+            return string.Format(isLargeTile ? MODE_LARGE_IMG_URL_MASK : MODE_IMAGE_URL_MASK, gameModeCode);
         }
+
+        #endregion
     }
 }

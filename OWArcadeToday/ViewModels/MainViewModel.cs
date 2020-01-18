@@ -1,70 +1,110 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using OWArcadeToday.Core.Models;
+using OWArcadeToday.Core.Services;
+using OWArcadeToday.Helpers;
+using OWArcadeToday.Services;
+using OWArcadeToday.Views;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using OWArcadeToday.Models;
-using OWArcadeToday.Services;
 
 namespace OWArcadeToday.ViewModels
 {
+    /// <summary>
+    /// Represents a <seealso cref="MainView"/> view model.
+    /// </summary>
     public sealed class MainViewModel : ViewModelBase
     {
-        private readonly DataService _service;
-        private readonly SettingsService _settingsService;
-        private readonly DispatcherTimer _timer;
+        #region Fields
 
-        private ArcadeDailyData _data;
-        private bool _isDataObsoleted;
-        private string _timeLeft = "00:00:00";
+        private const string DEFAULT_TIME_LEFT = "00:00:00";
 
+        private readonly IDataService service;
+        private readonly ISettingsService settingsService;
+        private readonly DispatcherTimer timer;
+
+        private ArcadeDailyData data;
+        private bool isDataObsoleted;
+        private string timeLeft;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
         public MainViewModel()
         {
-            _service = new DataService();
-            _settingsService = new SettingsService();
+            service = new DataService(HttpHelper.GetUserAgent());
+            settingsService = new SettingsService();
 
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _timer.Tick += Timer_Tick;
+            timer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            timer.Tick += OnTimerTick;
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the Overwatch Arcade Daily data.
+        /// </summary>
+        [CanBeNull]
         public ArcadeDailyData Data
         {
-            get => _data;
-            set
+            get => data;
+            private set
             {
-                if (value != _data)
+                if (value != data)
                 {
-                    _data = value;
+                    data = value;
                     OnPropertyChanged();
                 }
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating that data is obsoleted.
+        /// </summary>
         public bool IsDataObsoleted
         {
-            get => _isDataObsoleted;
-            set
+            get => isDataObsoleted;
+            private set
             {
-                if (value != _isDataObsoleted)
+                if (value != isDataObsoleted)
                 {
-                    _isDataObsoleted = value;
+                    isDataObsoleted = value;
                     OnPropertyChanged();
                 }
             }
         }
 
+        /// <summary>
+        /// Gets the string representation of a time left.
+        /// </summary>
+        [NotNull]
         public string TimeLeft
         {
-            get => _timeLeft;
-            set
+            get => timeLeft ?? DEFAULT_TIME_LEFT;
+            private set
             {
-                if (value != _timeLeft)
+                if (value != timeLeft)
                 {
-                    _timeLeft = value;
+                    timeLeft = value;
                     OnPropertyChanged();
                 }
             }
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Loads a data.
+        /// </summary>
         public async Task LoadDataAsync()
         {
             if (Data != null)
@@ -72,31 +112,43 @@ namespace OWArcadeToday.ViewModels
 
             try
             {
-                Data = await _service.GetTodayArcadeAsync();
+                Data = await service.GetTodayArcadeAsync();
             }
             catch (NoDataException)
             {
-                var history = await _service.GetWeekHistoryAsync();
-                if (history == null || history.Count == 0)
+                var history = await service.GetWeekHistoryAsync();
+                if (!history.Any())
                     throw new NoDataException();
 
                 IsDataObsoleted = true;
                 Data = history.First();
             }
 
-            _settingsService.Set("UpdatedAt", Data.UpdatedAt);
-            _settingsService.Set("LastData", Data);
+            settingsService.Set("CreatedAt", Data.CreatedAt);
+            settingsService.Set("LastData", Data);
         }
 
+        /// <summary>
+        /// Starts a time left timer.
+        /// </summary>
         public void StartTimer()
         {
             UpdateTimeLeft();
-            _timer.Start();
+            timer.Start();
         }
 
-        public void StopTimer() => _timer.Stop();
-        private void Timer_Tick(object sender, object e) => UpdateTimeLeft();
+        /// <summary>
+        /// Stops a time left timer.
+        /// </summary>
+        public void StopTimer() => timer.Stop();
 
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Updates a string representation of the time left.
+        /// </summary>
         private void UpdateTimeLeft()
         {
             var utcTomorrow = DateTime.Today.AddDays(1);
@@ -104,5 +156,14 @@ namespace OWArcadeToday.ViewModels
 
             TimeLeft = left.ToString(@"hh\:mm\:ss");
         }
+
+        /// <summary>
+        /// Occurs when the timer ticks.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event args.</param>
+        private void OnTimerTick(object sender, object e) => UpdateTimeLeft();
+
+        #endregion
     }
 }

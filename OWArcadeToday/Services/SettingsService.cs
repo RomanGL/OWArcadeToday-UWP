@@ -1,98 +1,108 @@
 ﻿using Newtonsoft.Json;
+using OWArcadeToday.Core.Services;
 using System.Collections.Generic;
 using Windows.Storage;
 
 namespace OWArcadeToday.Services
 {
-    public sealed class SettingsService
+    /// <inheritdoc />
+    internal sealed class SettingsService : ISettingsService
     {
-        private readonly Dictionary<string, object> _cache = new Dictionary<string, object>();
-        private readonly object _lockObject = new object();
+        #region Fields
 
+        private readonly Dictionary<string, object> cache = new Dictionary<string, object>();
+        private readonly object lockObject = new object();
+
+        #endregion
+
+        #region Implementation of ISettingsService
+
+        /// <inheritdoc />
         public void Clear()
         {
-            lock (_lockObject)
+            lock (lockObject)
             {
                 ApplicationData.Current.LocalSettings.Values.Clear();
-                _cache.Clear();
+                cache.Clear();
             }
         }
 
-        public void Set<T>(string parameterName, T value)
-        {
-            string json = JsonConvert.SerializeObject(value);
-
-            lock (_lockObject)
-            {
-                ApplicationData.Current.LocalSettings.Values[parameterName] = json;
-                _cache[parameterName] = value;
-            }
-        }
-
-        public T Get<T>(string parameterName, T defaultValue = default(T))
-        {
-            lock (_lockObject)
-            {
-                object readed;
-                _cache.TryGetValue(parameterName, out readed);
-
-                if (readed != null)
-                    return (T)readed;
-
-                ApplicationData.Current.LocalSettings.Values.TryGetValue(parameterName, out readed);
-                if (readed != null)
-                {
-                    string json = readed.ToString();
-                    T value = JsonConvert.DeserializeObject<T>(json);
-
-                    _cache[parameterName] = value;
-                    return value;
-                }
-                else
-                {
-                    string json = JsonConvert.SerializeObject(defaultValue);
-                    ApplicationData.Current.LocalSettings.Values[parameterName] = json;
-                    _cache[parameterName] = defaultValue;
-                    return defaultValue;
-                }
-            }
-        }
-
-        public T GetNoCache<T>(string parameterName, T defaultValue = default(T))
-        {
-            lock (_lockObject)
-            {
-                object readed;
-                ApplicationData.Current.LocalSettings.Values.TryGetValue(parameterName, out readed);
-                if (readed != null)
-                {
-                    string json = readed.ToString();
-                    T value = JsonConvert.DeserializeObject<T>(json);
-                    return value;
-                }
-                else
-                {
-                    string json = JsonConvert.SerializeObject(defaultValue);
-                    ApplicationData.Current.LocalSettings.Values[parameterName] = json;
-                    return defaultValue;
-                }
-            }
-        }
-
+        /// <inheritdoc />
         public void Remove(string parameterName)
         {
-            lock (_lockObject)
+            lock (lockObject)
             {
-                if (_cache.ContainsKey(parameterName))
-                    _cache.Remove(parameterName);
-                if (ContainsSetting(parameterName))
-                    ApplicationData.Current.LocalSettings.Values.Remove(parameterName);
+                cache.Remove(parameterName);
+                ApplicationData.Current.LocalSettings.Values.Remove(parameterName);
             }
         }
 
-        public bool ContainsSetting(string parameterName)
+        /// <inheritdoc />
+        public bool Contains(string parameterName)
+            => ApplicationData.Current.LocalSettings.Values.ContainsKey(parameterName);
+
+        /// <inheritdoc />
+        public void Set<T>(string parameterName, T value)
         {
-            return ApplicationData.Current.LocalSettings.Values.ContainsKey(parameterName);
+            var json = JsonConvert.SerializeObject(value);
+
+            lock (lockObject)
+            {
+                ApplicationData.Current.LocalSettings.Values[parameterName] = json;
+                cache[parameterName] = value;
+            }
         }
+
+        /// <inheritdoc />
+        public T Get<T>(string parameterName, T defaultValue = default(T))
+        {
+            lock (lockObject)
+            {
+                cache.TryGetValue(parameterName, out var readed);
+
+                if (readed != null)
+                    return (T) readed;
+
+                ApplicationData.Current.LocalSettings.Values.TryGetValue(parameterName, out readed);
+                if (readed != null)
+                {
+                    var json = readed.ToString();
+                    var value = JsonConvert.DeserializeObject<T>(json);
+
+                    cache[parameterName] = value;
+                    return value;
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(defaultValue);
+                    ApplicationData.Current.LocalSettings.Values[parameterName] = json;
+                    cache[parameterName] = defaultValue;
+                    return defaultValue;
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public T GetNoCache<T>(string parameterName, T defaultValue = default(T))
+        {
+            lock (lockObject)
+            {
+                ApplicationData.Current.LocalSettings.Values.TryGetValue(parameterName, out var readed);
+                if (readed != null)
+                {
+                    var json = readed.ToString();
+                    var value = JsonConvert.DeserializeObject<T>(json);
+                    return value;
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(defaultValue);
+                    ApplicationData.Current.LocalSettings.Values[parameterName] = json;
+                    return defaultValue;
+                }
+            }
+        }
+
+        #endregion
     }
 }

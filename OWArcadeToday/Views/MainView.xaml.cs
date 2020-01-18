@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using OWArcadeToday.Core.Services;
+using OWArcadeToday.ViewModels;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using OWArcadeToday.Services;
-using OWArcadeToday.ViewModels;
 
 namespace OWArcadeToday.Views
 {
@@ -29,17 +19,17 @@ namespace OWArcadeToday.Views
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
-        public MainViewModel VM { get; } = new MainViewModel();
+        public MainViewModel Vm { get; } = new MainViewModel();
 
         private void MainView_Loaded(object sender, RoutedEventArgs e)
         {
-            VM.StartTimer();
+            Vm.StartTimer();
             LoadData();
         }
 
         private void MainView_Unloaded(object sender, RoutedEventArgs e)
         {
-            VM.StopTimer();
+            Vm.StopTimer();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -57,7 +47,7 @@ namespace OWArcadeToday.Views
             try
             {
                 OnLoading();
-                await VM.LoadDataAsync();
+                await Vm.LoadDataAsync();
                 OnCompleted();
             }
             catch (NoDataException)
@@ -77,7 +67,7 @@ namespace OWArcadeToday.Views
             errorBlock.Visibility = Visibility.Collapsed;
             noDataBlock.Visibility = Visibility.Collapsed;
         }
-        
+
         private void OnError()
         {
             contentBlock.Visibility = Visibility.Collapsed;
