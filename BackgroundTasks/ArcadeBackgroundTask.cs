@@ -62,24 +62,50 @@ namespace BackgroundTasks
                         
                         if (lastData == null)
                         {
-                            //ShowTileToast(todayArcades.TileLarge, NEW_WEEKLY_ARCADE);
-                            //ShowTileToast(todayArcades.TileDaily, NEW_DAILY_ARCADE);
-                            //ShowTileToast(todayArcades.TileWeekly1, NEW_WEEKLY_ARCADE);
-                            //ShowTileToast(todayArcades.TileWeekly2, NEW_WEEKLY_ARCADE);
-                            //ShowTileToast(todayArcades.TilePermanent, NEW_PERMANENT_ARCADE);
+                            ShowTileToast(todayArcades.Tile1, GetUpdateDescription(todayArcades.Tile1.GameModeChangesType), true);
+                            ShowTileToast(todayArcades.Tile2, GetUpdateDescription(todayArcades.Tile2.GameModeChangesType));
+                            ShowTileToast(todayArcades.Tile3, GetUpdateDescription(todayArcades.Tile3.GameModeChangesType));
+                            ShowTileToast(todayArcades.Tile4, GetUpdateDescription(todayArcades.Tile4.GameModeChangesType));
+                            ShowTileToast(todayArcades.Tile5, GetUpdateDescription(todayArcades.Tile5.GameModeChangesType));
+                            ShowTileToast(todayArcades.Tile6, GetUpdateDescription(todayArcades.Tile6.GameModeChangesType));
+                            ShowTileToast(todayArcades.Tile7, GetUpdateDescription(todayArcades.Tile7.GameModeChangesType));
                         }
                         else
                         {
-                            //if (lastData.TileLarge.Id != todayArcades.TileLarge.Id)
-                            //    ShowTileToast(todayArcades.TileLarge, NEW_DAILY_ARCADE);
-                            //if (lastData.TileDaily.Id != todayArcades.TileDaily.Id)
-                            //    ShowTileToast(todayArcades.TileDaily, NEW_DAILY_ARCADE);
-                            //if (lastData.TileWeekly1.Id != todayArcades.TileWeekly1.Id)
-                            //    ShowTileToast(todayArcades.TileWeekly1, NEW_WEEKLY_ARCADE);
-                            //if (lastData.TileWeekly2.Id != todayArcades.TileWeekly2.Id)
-                            //    ShowTileToast(todayArcades.TileWeekly2, NEW_WEEKLY_ARCADE);
-                            //if (lastData.TilePermanent.Id != todayArcades.TilePermanent.Id)
-                            //    ShowTileToast(todayArcades.TilePermanent, NEW_PERMANENT_ARCADE);
+                            if (lastData.Tile1.Id != todayArcades.Tile1.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile1, GetUpdateDescription(todayArcades.Tile1.GameModeChangesType), true);
+                            }
+
+                            if (lastData.Tile2.Id != todayArcades.Tile2.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile2, GetUpdateDescription(todayArcades.Tile2.GameModeChangesType));
+                            }
+
+                            if (lastData.Tile3.Id != todayArcades.Tile3.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile3, GetUpdateDescription(todayArcades.Tile3.GameModeChangesType));
+                            }
+
+                            if (lastData.Tile4.Id != todayArcades.Tile4.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile4, GetUpdateDescription(todayArcades.Tile4.GameModeChangesType));
+                            }
+
+                            if (lastData.Tile5.Id != todayArcades.Tile5.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile5, GetUpdateDescription(todayArcades.Tile5.GameModeChangesType));
+                            }
+
+                            if (lastData.Tile6.Id != todayArcades.Tile6.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile6, GetUpdateDescription(todayArcades.Tile6.GameModeChangesType));
+                            }
+
+                            if (lastData.Tile7.Id != todayArcades.Tile7.Id)
+                            {
+                                ShowTileToast(todayArcades.Tile7, GetUpdateDescription(todayArcades.Tile7.GameModeChangesType));
+                            }
                         }
                     }
                 }
@@ -98,7 +124,7 @@ namespace BackgroundTasks
 
         #region Private Methods
 
-        private void ShowTileToast(ArcadeTileData data, string title)
+        private void ShowTileToast(ArcadeTileData data, string title, bool isLarge = false)
         {
             var toastContent = new ToastContent()
             {
@@ -151,7 +177,7 @@ namespace BackgroundTasks
                         },
                         HeroImage = new ToastGenericHeroImage()
                         {
-                            Source = GetGameModeImageUrl(data.Code)
+                            Source = GetGameModeImageUrl(data.Code, isLarge)
                         }
                     }
                 }
@@ -171,6 +197,26 @@ namespace BackgroundTasks
         private static string GetGameModeImageUrl(string gameModeCode, bool isLargeTile = false)
         {
             return string.Format(isLargeTile ? MODE_LARGE_IMG_URL_MASK : MODE_IMAGE_URL_MASK, gameModeCode);
+        }
+
+        /// <summary>
+        /// Gets the update description.
+        /// </summary>
+        /// <param name="changesType">The game mode changes type.</param>
+        /// <returns>Return the description.</returns>
+        private static string GetUpdateDescription(GameModeChangesType changesType)
+        {
+            switch (changesType)
+            {
+                case GameModeChangesType.Unknown:
+                    return NEW_PERMANENT_ARCADE;
+                case GameModeChangesType.Daily:
+                    return NEW_DAILY_ARCADE;
+                case GameModeChangesType.Weekly:
+                    return NEW_WEEKLY_ARCADE;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(changesType), changesType, null);
+            }
         }
 
         #endregion

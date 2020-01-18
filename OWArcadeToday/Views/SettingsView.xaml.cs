@@ -1,7 +1,7 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
 using OWArcadeToday.Services;
-using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace OWArcadeToday.Views
 {
