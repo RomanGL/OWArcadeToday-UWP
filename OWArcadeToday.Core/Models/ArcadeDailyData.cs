@@ -9,46 +9,10 @@ namespace OWArcadeToday.Core.Models
     public sealed class ArcadeDailyData
     {
         /// <summary>
-        /// Gets or sets the first tile data.
+        /// Gets or sets the today modes data.
         /// </summary>
-        [JsonProperty("tile_1")]
-        public ArcadeTileData Tile1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the second tile data.
-        /// </summary>
-        [JsonProperty("tile_2")]
-        public ArcadeTileData Tile2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the third tile data.
-        /// </summary>
-        [JsonProperty("tile_3")]
-        public ArcadeTileData Tile3 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the fourth tile data.
-        /// </summary>
-        [JsonProperty("tile_4")]
-        public ArcadeTileData Tile4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the fifth tile data.
-        /// </summary>
-        [JsonProperty("tile_5")]
-        public ArcadeTileData Tile5 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sixth tile data.
-        /// </summary>
-        [JsonProperty("tile_6")]
-        public ArcadeTileData Tile6 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the seventh tile data.
-        /// </summary>
-        [JsonProperty("tile_7")]
-        public ArcadeTileData Tile7 { get; set; }
+        [JsonProperty("modes")]
+        public ArcadeModesData Modes { get; set; }
 
         /// <summary>
         /// Gets or sets the last data update time.
@@ -59,7 +23,7 @@ namespace OWArcadeToday.Core.Models
         /// <summary>
         /// Gets or sets the user which made an update.
         /// </summary>
-        [JsonProperty("by_user")]
+        [JsonProperty("user")]
         public User ByUser { get; set; }
     }
 }

@@ -189,8 +189,7 @@ namespace OWArcadeToday.Controls
             }
             else
             {
-                var url = string.Format(IsLargeTile ? MODE_LARGE_IMG_URL_MASK : MODE_IMAGE_URL_MASK, TileData.Code);
-                TileImage = new BitmapImage(new Uri(url));
+                TileImage = new BitmapImage(new Uri(TileData.Image));
             }
         }
 

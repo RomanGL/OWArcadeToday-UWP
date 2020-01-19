@@ -8,12 +8,6 @@ namespace OWArcadeToday.Core.Models
     public sealed class ArcadeTileData
     {
         /// <summary>
-        /// Gets or sets the ID.
-        /// </summary>
-        [JsonProperty("id")]
-        public long Id { get; set; }
-
-        /// <summary>
         /// Gets or sets the name of a game mode.
         /// </summary>
         [JsonProperty("name")]
@@ -26,10 +20,10 @@ namespace OWArcadeToday.Core.Models
         public string Players { get; set; }
 
         /// <summary>
-        /// Gets or sets the code of a game mode.
+        /// Gets or sets the image url.
         /// </summary>
-        [JsonProperty("code")]
-        public string Code { get; set; }
+        [JsonProperty("image")]
+        public string Image { get; set; }
 
         /// <summary>
         /// Gets or sets the game mode changes type.

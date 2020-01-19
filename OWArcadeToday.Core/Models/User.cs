@@ -8,12 +8,6 @@ namespace OWArcadeToday.Core.Models
     public sealed class User
     {
         /// <summary>
-        /// Gets or sets the user ID.
-        /// </summary>
-        [JsonProperty("id")]
-        public long Id { get; set; }
-
-        /// <summary>
         /// Gets or sets the user Blizzard BattleTag.
         /// </summary>
         [JsonProperty("battletag")]

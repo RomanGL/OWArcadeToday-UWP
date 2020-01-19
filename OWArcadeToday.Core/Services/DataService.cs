@@ -56,8 +56,8 @@ namespace OWArcadeToday.Core.Services
         private async Task<ArcadeDailyData> GetArcadeDailyDataAsync([NotNull] string url)
         {
             var json = await GetResponseAsync(url).ConfigureAwait(false);
-            var data = JsonConvert.DeserializeObject<List<ArcadeDailyData>>(json);
-            return data.FirstOrDefault() ?? throw new NoDataException();
+            var data = JsonConvert.DeserializeObject<ArcadeDailyData>(json);
+            return data;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OWArcadeToday.Core.Services
             var response = await client.GetAsync(new Uri(url)).ConfigureAwait(false);
             string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(responseString))
+            if (string.IsNullOrEmpty(responseString) || responseString == "[]" || responseString == "{}")
                 throw new NoDataException();
 
             return responseString;

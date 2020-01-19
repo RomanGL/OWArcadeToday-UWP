@@ -64,52 +64,52 @@
                                        Grid.Column="0"
                                        BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
                                        BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}"
-                                       BadgeText="{x:Bind Vm.Data.Tile1.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile1.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile1.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile1.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
                                        Style="{StaticResource LargeTileStyle}"
-                                       TileData="{x:Bind Vm.Data.Tile1, Mode=OneWay}" />
+                                       TileData="{x:Bind Vm.Data.Modes.Tile1, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="0"
                                        Grid.Column="1"
                                        BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
                                        BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}"
-                                       BadgeText="{x:Bind Vm.Data.Tile2.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile2.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile2, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile2.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile2.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile2, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="0"
                                        Grid.Column="2"
                                        BadgeBackground="{StaticResource OrangeBadgeBackgroundBrush}"
                                        BadgeBackground2="{StaticResource OrangeBadgeBackground2Brush}"
-                                       BadgeText="{x:Bind Vm.Data.Tile3.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile3.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile3, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile3.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile3.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile3, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="0"
                                        Grid.Column="3"
                                        BadgeBackground="{StaticResource GreenBadgeBackgroundBrush}"
                                        BadgeBackground2="{StaticResource GreenBadgeBackground2Brush}"
-                                       BadgeText="{x:Bind Vm.Data.Tile4.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile4.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile4, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile4.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile4.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile4, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="1"
                                        Grid.Column="1"
-                                       BadgeText="{x:Bind Vm.Data.Tile5.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile5.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile5, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile5.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile5.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile5, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="1"
                                        Grid.Column="2"
-                                       BadgeText="{x:Bind Vm.Data.Tile6.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile6.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile6, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile6.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile6.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile6, Mode=OneWay}" />
 
                         <controls:Tile Grid.Row="1"
                                        Grid.Column="3"
-                                       BadgeText="{x:Bind Vm.Data.Tile7.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
-                                       IsBadgeVisible="{x:Bind Vm.Data.Tile7.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
-                                       TileData="{x:Bind Vm.Data.Tile7, Mode=OneWay}" />
+                                       BadgeText="{x:Bind Vm.Data.Modes.Tile7.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToChangesTextConverter}}"
+                                       IsBadgeVisible="{x:Bind Vm.Data.Modes.Tile7.GameModeChangesType, Mode=OneWay, Converter={StaticResource GameModeChangesTypeToBoolConverter}}"
+                                       TileData="{x:Bind Vm.Data.Modes.Tile7, Mode=OneWay}" />
                     </Grid>
                 </toolkit:DropShadowPanel>
 

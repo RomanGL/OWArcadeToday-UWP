@@ -17,9 +17,6 @@ namespace BackgroundTasks
     {
         #region Fields
 
-        private const string MODE_IMAGE_URL_MASK = "https://overwatcharcade.today/img/modes/{0}.jpg";
-        private const string MODE_LARGE_IMG_URL_MASK = "https://overwatcharcade.today/img/modes_large/{0}.jpg";
-
         private const string NEW_DAILY_ARCADE = "New daily arcade";
         private const string NEW_WEEKLY_ARCADE = "New weekly arcade";
         private const string NEW_PERMANENT_ARCADE = "New permanent arcade";
@@ -62,49 +59,49 @@ namespace BackgroundTasks
                         
                         if (lastData == null)
                         {
-                            ShowTileToast(todayArcades.Tile1, GetUpdateDescription(todayArcades.Tile1.GameModeChangesType), true);
-                            ShowTileToast(todayArcades.Tile2, GetUpdateDescription(todayArcades.Tile2.GameModeChangesType));
-                            ShowTileToast(todayArcades.Tile3, GetUpdateDescription(todayArcades.Tile3.GameModeChangesType));
-                            ShowTileToast(todayArcades.Tile4, GetUpdateDescription(todayArcades.Tile4.GameModeChangesType));
-                            ShowTileToast(todayArcades.Tile5, GetUpdateDescription(todayArcades.Tile5.GameModeChangesType));
-                            ShowTileToast(todayArcades.Tile6, GetUpdateDescription(todayArcades.Tile6.GameModeChangesType));
-                            ShowTileToast(todayArcades.Tile7, GetUpdateDescription(todayArcades.Tile7.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile1, GetUpdateDescription(todayArcades.Modes.Tile1.GameModeChangesType), true);
+                            ShowTileToast(todayArcades.Modes.Tile2, GetUpdateDescription(todayArcades.Modes.Tile2.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile3, GetUpdateDescription(todayArcades.Modes.Tile3.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile4, GetUpdateDescription(todayArcades.Modes.Tile4.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile5, GetUpdateDescription(todayArcades.Modes.Tile5.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile6, GetUpdateDescription(todayArcades.Modes.Tile6.GameModeChangesType));
+                            ShowTileToast(todayArcades.Modes.Tile7, GetUpdateDescription(todayArcades.Modes.Tile7.GameModeChangesType));
                         }
                         else
                         {
-                            if (lastData.Tile1.Id != todayArcades.Tile1.Id)
+                            if (lastData.Modes.Tile1.Name != todayArcades.Modes.Tile1.Name)
                             {
-                                ShowTileToast(todayArcades.Tile1, GetUpdateDescription(todayArcades.Tile1.GameModeChangesType), true);
+                                ShowTileToast(todayArcades.Modes.Tile1, GetUpdateDescription(todayArcades.Modes.Tile1.GameModeChangesType), true);
                             }
 
-                            if (lastData.Tile2.Id != todayArcades.Tile2.Id)
+                            if (lastData.Modes.Tile2.Name != todayArcades.Modes.Tile2.Name)
                             {
-                                ShowTileToast(todayArcades.Tile2, GetUpdateDescription(todayArcades.Tile2.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile2, GetUpdateDescription(todayArcades.Modes.Tile2.GameModeChangesType));
                             }
 
-                            if (lastData.Tile3.Id != todayArcades.Tile3.Id)
+                            if (lastData.Modes.Tile3.Name != todayArcades.Modes.Tile3.Name)
                             {
-                                ShowTileToast(todayArcades.Tile3, GetUpdateDescription(todayArcades.Tile3.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile3, GetUpdateDescription(todayArcades.Modes.Tile3.GameModeChangesType));
                             }
 
-                            if (lastData.Tile4.Id != todayArcades.Tile4.Id)
+                            if (lastData.Modes.Tile4.Name != todayArcades.Modes.Tile4.Name)
                             {
-                                ShowTileToast(todayArcades.Tile4, GetUpdateDescription(todayArcades.Tile4.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile4, GetUpdateDescription(todayArcades.Modes.Tile4.GameModeChangesType));
                             }
 
-                            if (lastData.Tile5.Id != todayArcades.Tile5.Id)
+                            if (lastData.Modes.Tile5.Name != todayArcades.Modes.Tile5.Name)
                             {
-                                ShowTileToast(todayArcades.Tile5, GetUpdateDescription(todayArcades.Tile5.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile5, GetUpdateDescription(todayArcades.Modes.Tile5.GameModeChangesType));
                             }
 
-                            if (lastData.Tile6.Id != todayArcades.Tile6.Id)
+                            if (lastData.Modes.Tile6.Name != todayArcades.Modes.Tile6.Name)
                             {
-                                ShowTileToast(todayArcades.Tile6, GetUpdateDescription(todayArcades.Tile6.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile6, GetUpdateDescription(todayArcades.Modes.Tile6.GameModeChangesType));
                             }
 
-                            if (lastData.Tile7.Id != todayArcades.Tile7.Id)
+                            if (lastData.Modes.Tile7.Name != todayArcades.Modes.Tile7.Name)
                             {
-                                ShowTileToast(todayArcades.Tile7, GetUpdateDescription(todayArcades.Tile7.GameModeChangesType));
+                                ShowTileToast(todayArcades.Modes.Tile7, GetUpdateDescription(todayArcades.Modes.Tile7.GameModeChangesType));
                             }
                         }
                     }
@@ -137,11 +134,11 @@ namespace BackgroundTasks
                             new AdaptiveText()
                             {
                                 Text = title,
-                                HintMaxLines = 1
+                                HintMaxLines = 1,
                             },
                             new AdaptiveText()
                             {
-                                Text = data.Name
+                                Text = data.Name,
                             },
                             new AdaptiveGroup()
                             {
@@ -155,9 +152,9 @@ namespace BackgroundTasks
                                             new AdaptiveText()
                                             {
                                                 Text = "Players",
-                                                HintStyle = AdaptiveTextStyle.Body
+                                                HintStyle = AdaptiveTextStyle.Body,
                                             },
-                                        }
+                                        },
                                     },
                                     new AdaptiveSubgroup()
                                     {
@@ -168,35 +165,23 @@ namespace BackgroundTasks
                                             {
                                                 Text = data.Players,
                                                 HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                HintAlign = AdaptiveTextAlign.Right
+                                                HintAlign = AdaptiveTextAlign.Right,
                                             }
-                                        }
-                                    }
-                                }
-                            }
+                                        },
+                                    },
+                                },
+                            },
                         },
                         HeroImage = new ToastGenericHeroImage()
                         {
-                            Source = GetGameModeImageUrl(data.Code, isLarge)
-                        }
-                    }
-                }
+                            Source = data.Image,
+                        },
+                    },
+                },
             };
 
             var notification = new ToastNotification(toastContent.GetXml());
             ToastNotificationManager.CreateToastNotifier().Show(notification);
-        }
-
-
-        /// <summary>
-        /// Gets the url of the game mode image.
-        /// </summary>
-        /// <param name="gameModeCode">The game mode code.</param>
-        /// <param name="isLargeTile">The value indicating whether a tile is large.</param>
-        /// <returns>Returns the url to the game mode image.</returns>
-        private static string GetGameModeImageUrl(string gameModeCode, bool isLargeTile = false)
-        {
-            return string.Format(isLargeTile ? MODE_LARGE_IMG_URL_MASK : MODE_IMAGE_URL_MASK, gameModeCode);
         }
 
         /// <summary>
