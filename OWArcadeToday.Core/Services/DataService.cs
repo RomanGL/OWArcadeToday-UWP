@@ -15,7 +15,7 @@ namespace OWArcadeToday.Core.Services
         #region Fields
 
         private const string API_TODAY = "https://overwatcharcade.today/api/today";
-        private const string API_WEEK = "https://overwatcharcade.today/api/week";
+        private const string API_TODAY_FALLBACK = "https://overwatcharcade.today/api/today?fallback=true";
 
         private readonly HttpClient client;
 
@@ -38,24 +38,27 @@ namespace OWArcadeToday.Core.Services
         #region Public Methods
 
         /// <inheritdoc />
-        public async Task<ArcadeDailyData> GetTodayArcadeAsync()
-        {
-            var json = await GetResponseAsync(API_TODAY).ConfigureAwait(false);
-            var data = JsonConvert.DeserializeObject<List<ArcadeDailyData>>(json);
-            return data.FirstOrDefault() ?? throw new NoDataException();
-        }
+        public Task<ArcadeDailyData> GetTodayArcadeAsync() => GetArcadeDailyDataAsync(API_TODAY);
 
         /// <inheritdoc />
-        public async Task<List<ArcadeDailyData>> GetWeekHistoryAsync()
-        {
-            var json = await GetResponseAsync(API_WEEK).ConfigureAwait(false);
-            var data = JsonConvert.DeserializeObject<List<ArcadeDailyData>>(json);
-            return data;
-        }
+        public Task<ArcadeDailyData> GetLastSetTodayArcadeAsync() => GetArcadeDailyDataAsync(API_TODAY_FALLBACK);
 
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Gets arcade daily data from the specified url.
+        /// </summary>
+        /// <param name="url">The url.</param>
+        /// <exception cref="NoDataException">No data of Overwatch Arcades.</exception>
+        [ItemNotNull]
+        private async Task<ArcadeDailyData> GetArcadeDailyDataAsync([NotNull] string url)
+        {
+            var json = await GetResponseAsync(url).ConfigureAwait(false);
+            var data = JsonConvert.DeserializeObject<List<ArcadeDailyData>>(json);
+            return data.FirstOrDefault() ?? throw new NoDataException();
+        }
 
         /// <summary>
         /// Gets the response from the specified <paramref name="url"/>.

@@ -116,12 +116,8 @@ namespace OWArcadeToday.ViewModels
             }
             catch (NoDataException)
             {
-                var history = await service.GetWeekHistoryAsync();
-                if (!history.Any())
-                    throw new NoDataException();
-
+                Data = await service.GetLastSetTodayArcadeAsync();
                 IsDataObsoleted = true;
-                Data = history.First();
             }
 
             settingsService.Set("CreatedAt", Data.CreatedAt);

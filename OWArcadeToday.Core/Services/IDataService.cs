@@ -1,7 +1,6 @@
-﻿using OWArcadeToday.Core.Models;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using OWArcadeToday.Core.Models;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace OWArcadeToday.Core.Services
 {
@@ -19,11 +18,11 @@ namespace OWArcadeToday.Core.Services
         Task<ArcadeDailyData> GetTodayArcadeAsync();
 
         /// <summary>
-        /// Gets the week history of Overwatch Arcade.
+        /// Gets the last available today Overwatch Arcade data.
         /// </summary>
-        /// <returns>Returns a collection of an Overwatch Arcade daily data.</returns>
+        /// <returns>Return a last available today Overwatch Arcade Data.</returns>
         /// <exception cref="NoDataException">No data of Overwatch Arcades.</exception>
         [ItemNotNull]
-        Task<List<ArcadeDailyData>> GetWeekHistoryAsync();
+        Task<ArcadeDailyData> GetLastSetTodayArcadeAsync();
     }
 }
