@@ -5,3 +5,6 @@ OW Arcade Today allows you to keep abreast of arcade game modes available today 
 
 Created special for the site overwatcharcade.today
 Be sure you will enjoy the app!
+
+#### See more
+Overwatch Arcade Today for iOS: https://github.com/RomanGL/OWArcadeToday-iOS
